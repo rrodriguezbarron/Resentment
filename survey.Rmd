@@ -1,0 +1,93 @@
+---
+title: "survey"
+author: "Rubén A. Rodríguez Barrón"
+date: "2022-09-16"
+output:
+  html_document:
+    toc: true
+---
+# Survey Questions
+
+## Demographic Questions
+1. Age [INTEGER]
+1. Gender [STRING (INTEGER)]
+    - Female (0)
+    - Male (1)
+1. Race [STRING]
+    - White
+    - Black
+    - Latino
+    - Asian
+    - Native American or Alaska Native
+    - Hawaiian or Pacific Islander
+    - Other
+
+$\rightarrow$ What about two or more as option? In that case, we might change this to tick boxes. 
+
+1. Hispanic [BOOLEAN]
+    - NO (0)
+    - YES (1) $\rightarrow$ Specify: 
+      - Cuban
+      - Mexican
+      - Puerto Rican
+      - Central American (Belize, Costa Rica, El Salvador, Guatemala, Honduras, Nicaragua, Panama)
+      - South American (Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador, Falkland Islands, French Guiana, Guyana, Paraguay, Peru, Suriname, Uruguay, Venezuela)
+
+1. Education [STRING]
+    - High School
+    - Some College
+    - BA Degree
+    - Graduate Degree
+
+$\rightarrow$ Of note, we might have to consider associate degrees as “some college”. 
+
+1. Marital Status [STRING]
+    - Single
+    - Married
+    - Divorced
+    - Widowed
+1. Household Income [STRING]
+    - RANGES !!
+1. Party [7-point]
+1. Ideology [7-point]
+
+$\rightarrow$ Alternatively, we could use my 13-point scale to measure social and economic conservatism. I really think we could use both dimensions.  
+
+$\rightarrow$ Should we add a measure of political knowledge, e.g. Who is John Roberts?
+
+## Resentment
+
+Resentment measures are taken from [Munis](https://doi.org/10.1007/s11109-020-09641-2). Bolded items are used in the four-point scale. 
+
+
+1. Distributive 1: My community gives more in taxes to [out] in my state than we get back
+1. **Distributive 2**: When [in] are hit by bad times, people living there solve problems on their own. The state and federal government shouldn’t give [out] special favors
+1. **Distributive 3**: We wouldn’t have to waste tax dollars bailing out [out] in [R state] if people just moved away
+1. **Distributive 4**: Decades of technological and economic changes have made it difficult for some [in] and [in_adj] communities in [R state] to improve on their own
+1. Representational 1: In recent elections in [R state], there have been too many candidates who narrowly represent the interests of [out]
+1. **Representational 2**: [out] have too much say in [R state] politics
+1. Cultural 1: People in [out] areas in [R state] don’t understand or respect the [in_adj] lifestyle and what [in_noun] do for fun	 
+1. Cultural 2: It’s fair to say that [in_noun] in [R state] are harder working because it’s more difficult to get by in [in] than [out]	 
+1. Cultural 3: Despite what some people say, [in] and [in_adj] communities are the “real America.” (alternative: “…. the “real [R state]) 
+1. Cultural 4: [in_adj] areas in [R state] have a distinct culture that is often misunderstood by people in [out]
+
+## Entertainment
+
+1. Platforms [Tickbox]
+    - Netflix
+    - Hulu
+    - Amazon Prime Video
+    - Disney+
+    - Funimation
+    - HBO Max
+    - Peacock
+    - Crunchyroll
+    - Paramount+
+    - Apple+
+
+1. Websites ?
+    - YouTube
+    - NEWS?
+1. Shows
+1. Hours a week
+
