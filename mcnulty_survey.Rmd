@@ -1,0 +1,183 @@
+---
+title: "survey"
+author: "Braeden McNulty (Florida State University) & Rubén A. Rodríguez Barrón (University of Chicago)"
+date: "2022-09-16"
+output:
+  html_document:
+    toc: true
+---
+
+# Geographic Measure
+
+1. RUCA - ZIP Code [INTEGER - ORDINAL]
+These measure the location of ZIP codes along the urban-rural continuum. They account for how interconnected ZIP codes are to urbanized areas through roadways, commuter paths, and other infrastructure.
+    - 1 (Most Urban)
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9 
+    - 10 (Most Rural)
+    
+1. RUCC - County [INTEGER - ORDINAL]
+These function in very much the same way as RUCA codes, but RUCC codes are measured at the county level. 
+    - 1 (Most Urban)
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9 
+    - 10 (Most Rural)
+    
+1. Scala & Johnson (2015) Measure [INTEGER - ORDINAL]
+This measure is adopted from a PNAS paper that divides places based on their adjacency to metropolitan and micropolitan areas. 
+    - 1 (Metropolitan Core)
+    - 2 (Micropolitan Core)
+    - 3 (Suburban Metro-Adjacent)
+    - 4 (Suburban Micro-Adjacent)
+    - 5 (Rural Micro-Adjacent)
+    - 6 (Rural Non-Adjacent)
+    
+1. Census Percent Urbanization (2015) Measure [INTEGER - ORDINAL]
+This is a reverse coded measure of urbanization from the US Census. 
+    - 0 (Most Urban)
+    - 100 (Most Rural)
+    
+$\rightarrow$ For simplicity's sake when creating our survey figures, we might want to collapse some of these measures to make the distributions easier for respondents to read and understand.
+    
+$\rightarrow$ Having a few different objective and subjective measures of geography will give us flexibility in how we measure geography! Some of these will be helpful for creating figures for a hardcore Reviewer 2 that has one measure they like better than another. For now, having multiple measures can give us coarse and fine definitions of place and save us from being too committal until we preregister this design.
+
+# Survey Questions
+
+## Independent Variables
+
+### Demographic Questions
+
+1. Age [INTEGER]
+1. Gender [STRING (INTEGER)]
+    - Female (0)
+    - Male (1)
+1. Race [STRING]
+    - White
+    - Arab or Middle Eastern
+    - Black
+    - Latino
+    - Asian
+    - Native American or Alaska Native
+    - Hawaiian or Pacific Islander
+    - Other
+
+$\rightarrow$ What about two or more as option? In that case, we might change this to tick boxes. 
+
+1. Hispanic [BOOLEAN]
+    - NO (0)
+    - YES (1) $\rightarrow$ Specify: 
+      - Cuban
+      - Mexican
+      - Puerto Rican
+      - Central American (Belize, Costa Rica, El Salvador, Guatemala, Honduras, Nicaragua, Panama)
+      - South American (Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador, Falkland Islands, French Guiana, Guyana, Paraguay, Peru, Suriname, Uruguay, Venezuela)
+
+1. Education [STRING]
+    - High School
+    - Some College
+    - BA Degree
+    - Graduate Degree
+
+$\rightarrow$ Of note, we might have to consider associate degrees as “some college”. 
+$\rightarrow$ I agree. My professors typically do the same thing!
+
+1. Marital Status [STRING]
+    - Single
+    - Married
+    - Divorced
+    - Widowed
+1. Household Income [STRING]
+    - RANGES !!
+1. Party [7-point]
+1. Ideology [7-point]
+
+$\rightarrow$ Alternatively, we could use my 13-point scale to measure social and economic conservatism. I really think we could use both dimensions.  
+
+$\rightarrow$ Should we add a measure of political knowledge, e.g. Who is John Roberts?
+$\rightarrow$ Yes! Since we are looking at state politics, we might want to add some state specific questions, too! Since RCON can be founded on misperceptions, sophistication could be a good variable. It might also give us a chance to clap back at our department chair's AJPS (Gomex and Wilson 2007) argument that less sophisticated people are less likely to draw on systemic explainations of injustice (which RCON fits into this). RCON could be an expecption to his findings on racism and economic growth/decline. 
+
+### Place Identity
+
+1. Geographic Place Identity [STRING]
+Do you currently live in a rural area, small town, suburb, or a city?
+    - Urban
+    - Suburban
+    - Small Town
+    - Rural
+1. Psychological Place Identity [STRING]
+Regardless of where you currently live, do you usually think of yourself as a city/urban person, a suburb person, a small-town person, a country/rural person?
+    - Urban
+    - Suburban
+    - Small Town
+    - Rural
+1. Residency Length [INTEGER]
+How long have you lived at your current place of residence? 
+
+### Place Importance
+
+$\rightarrow$ Munis has another paper with a four point scale that measures the importance of place identity that he borrowed from another paper (Stedman 2002, Osbourne 2006). We can lift it for place importance
+
+### Entertainment
+
+1. Platforms [Tickbox]
+    - Netflix
+    - Hulu
+    - Amazon Prime Video
+    - Disney+
+    - Funimation
+    - HBO Max
+    - Peacock
+    - Crunchyroll
+    - Paramount+
+    - Apple+
+
+1. Websites ?
+    - YouTube
+    - NEWS?
+1. Shows
+
+$\rightarrow$ I would keep this open-ended as it may be the most organic way to separate people based on what they watch. You might want to use machine learning or hire an undergrad to clean up this qualitative data for you. If Chicago doesn't have a code assistant program, I can hire one at FSU. I am pretty tight with a few advanced undergrads here.
+
+1. Hours a week
+
+## Dependent Variables
+
+### Resentment
+
+Resentment measures are taken from [Munis](https://doi.org/10.1007/s11109-020-09641-2). Bolded items are used in the four-point scale. 
+
+1. Distributive 1: My community gives more in taxes to [out] in my state than we get back
+1. **Distributive 2**: When [in] are hit by bad times, people living there solve problems on their own. The state and federal government shouldn’t give [out] special favors
+1. **Distributive 3**: We wouldn’t have to waste tax dollars bailing out [out] in [R state] if people just moved away
+1. **Distributive 4**: Decades of technological and economic changes have made it difficult for some [in] and [in_adj] communities in [R state] to improve on their own
+1. Representational 1: In recent elections in [R state], there have been too many candidates who narrowly represent the interests of [out]
+1. **Representational 2**: [out] have too much say in [R state] politics
+1. Cultural 1: People in [out] areas in [R state] don’t understand or respect the [in_adj] lifestyle and what [in_noun] do for fun	 
+1. Cultural 2: It’s fair to say that [in_noun] in [R state] are harder working because it’s more difficult to get by in [in] than [out]	 
+1. Cultural 3: Despite what some people say, [in] and [in_adj] communities are the “real America.” (alternative: “…. the “real [R state]) 
+1. Cultural 4: [in_adj] areas in [R state] have a distinct culture that is often misunderstood by people in [out]
+
+$\rightarrow$ Munis loved the idea of using his scale as a DV, though he suggested using feeling thermometers to measure affect towards urban, suburban, and rural areas because they are more-tested and a staple of polarization literature (Ahler and Sood 2018).
+
+## Feeling Thermometers
+
+1. Thermo Rural [INTEGER]
+On a scale from 0-100, with 0 representing very negative feelings and 100 representing very positive feelings, how would you rate the group Rural Communities?
+
+1. Thermo Suburban
+On a scale from 0-100, with 0 representing very negative feelings and 100 representing very positive feelings, how would you rate the group Suburban Communities?
+
+1. Thermo Urban
+On a scale from 0-100, with 0 representing very negative feelings and 100 representing very positive feelings, how would you rate the group Urban Communities?
