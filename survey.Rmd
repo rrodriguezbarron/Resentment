@@ -51,6 +51,8 @@ $\rightarrow$ Of note, we might have to consider associate degrees as “some co
 1. Party [7-point]
 1. Ideology [7-point]
 
+$\rightarrow$ Following [Wood and Oliver](https://doi.org/10.1093/poq/nfs045), we might instead use a 3-point ideology plus "Don't Know/Refuse" and interact that with a 3-point educational scale. Check _Table 4_ in the paper. 
+
 $\rightarrow$ Alternatively, we could use my 13-point scale to measure social and economic conservatism. I really think we could use both dimensions.  
 
 $\rightarrow$ Should we add a measure of political knowledge, e.g. Who is John Roberts?
