@@ -7,7 +7,7 @@ output:
     toc: true
 ---
 
-# Geographic Measure
+# Geographic Measures
 
 1. RUCA - ZIP Code [INTEGER - ORDINAL]
 These measure the location of ZIP codes along the urban-rural continuum. They account for how interconnected ZIP codes are to urbanized areas through roadways, commuter paths, and other infrastructure.
