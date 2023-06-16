@@ -73,7 +73,7 @@ spending <- spending %>%
 
 ```{r}
 # Import RUCA
-ruca <- read.csv("RUCA.csv")
+ruca <- read.csv("DATA/RUCA.csv")
 ```
 
 
@@ -135,5 +135,13 @@ donor <- taxes %>%
        subtitle = "Source: IRS (2020)")
 
 toc()
+```
+
+# Taxes only
+
+```{r}
+
+lm
+
 ```
 
