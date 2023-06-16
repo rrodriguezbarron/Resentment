@@ -1,0 +1,23 @@
+# Charitable Contributions by State
+
+```{r}
+tic()
+
+donor <- taxes %>% 
+  select(fips,state,N1,A19700) %>% 
+  group_by(state) %>% 
+  summarize(donations = sum(A19700)/sum(N1))
+
+
+  plot_usmap(data = donor,
+             regions = "states",
+             values = "donations",
+             color = "black") + 
+  scale_fill_continuous(low = "white",
+                        high = "blue",
+                        name = "Donations") +
+  labs(title = "Donations per Capita by State",
+       subtitle = "Source: IRS (2020)")
+
+toc()
+```

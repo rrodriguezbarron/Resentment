@@ -18,130 +18,93 @@ library("viridis")
 library("viridisLite")
 library("usmap")
 library("usmapdata")
-#devtools::install_github(“UrbanInstitute/urbnmapr”)
-#library("urbanmapr")
-library("data.table")
+library("skimr")
 set.seed(1234)
 ```
 
 # Import Data
 ```{r}
-# Import taxes
+# Import rds files
+# Comparison vs CSV
+# Import time down from 85.74 sec with CSV to 30.91 sec with RDS.
+# Memory usage down from 5.1 Gb to 1.36Gb
 tic()
-taxes <- read.csv("IRS.csv")
+taxes <- readRDS("taxes.rds")
+ruca <- readRDS("ruca.rds")
+spending <- readRDS("spending.rds")
 toc()
-
-# Edit Taxes
-taxes <- taxes %>% 
-  rename(fips = STATEFIPS, 
-         state = STATE)
 ```
 
-
-
-```{r}
-# Import spending files
-tic()
-spend1 <- fread("USASpending_1.csv",select = c('parent_award_agency_id','parent_award_agency_name','total_dollars_obligated','awarding_agency_code','awarding_agency_name','awarding_sub_agency_code','awarding_sub_agency_name','awarding_office_code','awarding_office_name','funding_agency_code','funding_agency_name','recipient_country_name','recipient_address_line_1','recipient_address_line_2','recipient_city_name','recipient_county_name','recipient_state_code','recipient_state_name','recipient_zip_4_code','recipient_congressional_district'))
-
-spend2 <- fread("USASpending_2.csv",select = c('parent_award_agency_id','parent_award_agency_name','total_dollars_obligated','awarding_agency_code','awarding_agency_name','awarding_sub_agency_code','awarding_sub_agency_name','awarding_office_code','awarding_office_name','funding_agency_code','funding_agency_name','recipient_country_name','recipient_address_line_1','recipient_address_line_2','recipient_city_name','recipient_county_name','recipient_state_code','recipient_state_name','recipient_zip_4_code','recipient_congressional_district'))
-
-spend3 <- fread("USASpending_3.csv",select = c('parent_award_agency_id','parent_award_agency_name','total_dollars_obligated','awarding_agency_code','awarding_agency_name','awarding_sub_agency_code','awarding_sub_agency_name','awarding_office_code','awarding_office_name','funding_agency_code','funding_agency_name','recipient_country_name','recipient_address_line_1','recipient_address_line_2','recipient_city_name','recipient_county_name','recipient_state_code','recipient_state_name','recipient_zip_4_code','recipient_congressional_district'))
-
-spend4 <- fread("USASpending_4.csv",select = c('parent_award_agency_id','parent_award_agency_name','total_dollars_obligated','awarding_agency_code','awarding_agency_name','awarding_sub_agency_code','awarding_sub_agency_name','awarding_office_code','awarding_office_name','funding_agency_code','funding_agency_name','recipient_country_name','recipient_address_line_1','recipient_address_line_2','recipient_city_name','recipient_county_name','recipient_state_code','recipient_state_name','recipient_zip_4_code','recipient_congressional_district'))
-
-spend5 <- fread("USASpending_5.csv",select = c('parent_award_agency_id','parent_award_agency_name','total_dollars_obligated','awarding_agency_code','awarding_agency_name','awarding_sub_agency_code','awarding_sub_agency_name','awarding_office_code','awarding_office_name','funding_agency_code','funding_agency_name','recipient_country_name','recipient_address_line_1','recipient_address_line_2','recipient_city_name','recipient_county_name','recipient_state_code','recipient_state_name','recipient_zip_4_code','recipient_congressional_district'))
-
-spend6 <- fread("USASpending_6.csv",select = c('parent_award_agency_id','parent_award_agency_name','total_dollars_obligated','awarding_agency_code','awarding_agency_name','awarding_sub_agency_code','awarding_sub_agency_name','awarding_office_code','awarding_office_name','funding_agency_code','funding_agency_name','recipient_country_name','recipient_address_line_1','recipient_address_line_2','recipient_city_name','recipient_county_name','recipient_state_code','recipient_state_name','recipient_zip_4_code','recipient_congressional_district'))
-
-spend7 <- fread("USASpending_7.csv",select = c('parent_award_agency_id','parent_award_agency_name','total_dollars_obligated','awarding_agency_code','awarding_agency_name','awarding_sub_agency_code','awarding_sub_agency_name','awarding_office_code','awarding_office_name','funding_agency_code','funding_agency_name','recipient_country_name','recipient_address_line_1','recipient_address_line_2','recipient_city_name','recipient_county_name','recipient_state_code','recipient_state_name','recipient_zip_4_code','recipient_congressional_district'))
-
-toc()
-
-# create spending
-spending <- bind_rows(list(spend1,spend2,spend3,spend4,spend5,spend6,spend7))
-
-# remove spending files
-rm(spend1,spend2,spend3,spend4,spend5,spend6,spend7)
-
-# edit spending
-spending <- spending %>% 
-  rename("state" = "recipient_state_code",
-         "zipcode" = "recipient_zip_4_code")
-
-```
+# State Level
 
 ```{r}
-# Import RUCA
-ruca <- read.csv("DATA/RUCA.csv")
+# Spending
+spending_state <- spending %>% 
+  filter(state %in% c("AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY")) %>% 
+  group_by(state) %>% 
+  summarise(spending = sum(total_dollars_obligated))
+
+# Taxes
+taxes_state <- taxes %>% 
+  filter(state %in% c("AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY")) %>% 
+  group_by(state) %>% 
+  summarise(taxes = sum(liability*1e3))
 ```
 
 
 ```{r}
-glimpse(taxes)
-glimpse(spending)
+# creating state
+
+state <- full_join(taxes_state, spending_state, by = "state") %>% 
+  mutate(taxes = taxes,
+         taxp = taxes / taxes,
+         spendp = spending / taxes) %>% 
+  pivot_longer(cols = c(taxp,spendp),
+               names_to = "type",
+               values_to = "amount")
+
+state
 ```
 
-# AGI and Spending by State
-
 ```{r}
-spending %>% 
-  count(state)
+state %>% 
+  ggplot(aes(x=as.factor(state),
+             y=amount,
+             fill=type)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 10,angle=90)) 
+  
 ```
 
+# Zipcode
 
-```{r}
+
+
+x: Urban, Suburban, Rural
+y: Income/Spending stacked
+
+Regions
+
+Y as percentage to make it easier for people to ID.
+
+
+
+```{r, eval=FALSE}
 taxes %>% 
   group_by(state) %>% 
-  summarize(AGI = sum(A00100)) %>% 
-  ggplot(aes(state,AGI)) +
-  geom_col() +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90)) +
-  labs(title = "Taxes by State",
-       subtitle = "Source: IRS 2020")
-
-spending %>% 
-  group_by(state) %>% 
-  summarize(spending = sum(total_dollars_obligated)) %>% 
-  ggplot(aes(state,spending)) +
-  geom_col() +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90)) +
-  labs(title = "Spending by State",
-       subtitle = "Source: USA Spending 2020")
+  summarise(income = sum(A00100),
+            total = income/income,
+            donations = sum(A19700)/income) %>% 
+  ggplot() +
+  geom_col(aes(x = state,
+               y = total/total,
+               fill = "green")) +
+  geom_col(aes(x = state,
+               y = donations/total,
+               fill = "blue")) +
+  geom_col(aes(x = state,
+               y = total/total,
+               fill = "red")) +
+  theme_bw()
 ```
-
-
-# Charitable Contributions by State
-
-```{r}
-tic()
-
-donor <- taxes %>% 
-  select(fips,state,N1,A19700) %>% 
-  group_by(state) %>% 
-  summarize(donations = sum(A19700)/sum(N1))
-
-
-  plot_usmap(data = donor,
-             regions = "states",
-             values = "donations",
-             color = "black") + 
-  scale_fill_continuous(low = "white",
-                        high = "blue",
-                        name = "Donations") +
-  labs(title = "Donations per Capita by State",
-       subtitle = "Source: IRS (2020)")
-
-toc()
-```
-
-# Taxes only
-
-```{r}
-
-lm
-
-```
-
